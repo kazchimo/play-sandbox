@@ -7,6 +7,8 @@ CREATE TABLE public.users (
     PRIMARY KEY (id)
 );
 
+insert into users values (1, 'test@gmail.com', 'testUser');
+
 -- !Downs
 
 DROP TABLE users;
