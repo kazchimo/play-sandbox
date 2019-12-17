@@ -28,11 +28,12 @@ lazy val root = (project in file("."))
     )
   })
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(ehcache, ws, specs2 % Test, guice, evolutions)
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.6"
+libraryDependencies += "io.swagger" %% "swagger-play2" % "1.7.1"
 
 // slick系の依存
 libraryDependencies ++= Seq(
