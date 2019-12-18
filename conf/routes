@@ -5,7 +5,7 @@
 
 # An example controller showing a sample home page
 GET        /                    controllers.HomeController.index
-GET        /user                controllers.UserController.index
+GET        /users               controllers.UserController.index
 
 GET        /swagger.json        controllers.ApiHelpController.getResources
 
