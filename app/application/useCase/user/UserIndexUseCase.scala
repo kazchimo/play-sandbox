@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 import scala.concurrent.Future
 
-class UserIndexUseCase @Inject()(repository: IUserRepository) {
+class UserIndexUseCase @Inject() (repository: IUserRepository) {
   def exec: Future[Seq[User]] = repository.all
 }

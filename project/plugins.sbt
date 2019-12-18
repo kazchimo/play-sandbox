@@ -4,4 +4,6 @@ addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.4.0")
 addSbtPlugin("au.com.onegeek" %% "sbt-dotenv" % "2.1.146")
 libraryDependencies += "org.postgresql" % "postgresql" % "42.2.5"
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.1")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.2.1")
+
 

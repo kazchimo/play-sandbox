@@ -11,9 +11,9 @@ import scala.concurrent.ExecutionContext
 
 @Singleton
 @Api(value = "userAPI")
-class UserController @Inject()(
-  cc: ControllerComponents,
-  indexUseCase: UserIndexUseCase
+class UserController @Inject() (
+    cc: ControllerComponents,
+    indexUseCase: UserIndexUseCase
 )(implicit ec: ExecutionContext)
     extends AbstractController(cc) {
 

@@ -16,7 +16,8 @@ trait Tables extends PlayEvolutionsTable with UsersTable {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = PlayEvolutions.schema ++ Users.schema
+  lazy val schema
+      : profile.SchemaDescription = PlayEvolutions.schema ++ Users.schema
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
 

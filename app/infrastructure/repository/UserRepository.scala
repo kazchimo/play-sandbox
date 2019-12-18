@@ -9,9 +9,10 @@ import infrastructure.tables.Tables._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class UserRepository @Inject()(implicit ec: ExecutionContext,
-                               val dbConfigProvider: DatabaseConfigProvider)
-    extends IUserRepository
+class UserRepository @Inject() (
+    implicit ec: ExecutionContext,
+    val dbConfigProvider: DatabaseConfigProvider
+) extends IUserRepository
     with HasDatabaseConfigProvider[PostgresProfile] {
   override def all: Future[Seq[User]] = db.run(Users.result).map { users =>
     users.map { user =>
