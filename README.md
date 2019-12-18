@@ -13,3 +13,8 @@ yarn start
 
 を実行。
 その後表示されたページの入力欄でhttp://localhost:9000/swagger.jsonを入力。
+
+## カバレッジありのテスト実行方法
+```shell script
+sbt clean coverage test coverageReport
+```
