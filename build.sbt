@@ -36,7 +36,6 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.6"
 libraryDependencies += "io.swagger" %% "swagger-play2" % "1.7.1"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 
-
 // slick系の依存
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "3.3.2",
@@ -46,3 +45,6 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % "42.1.4",
   "com.typesafe.slick" %% "slick-codegen" % "3.3.2"
 )
+
+coverageEnabled in ThisBuild := true // testのカバレッジをオンに
+coverageExcludedPackages := "<empty>;Reverse.*;.*Table.*;" // テストカバレッジで除外するファイルの指定
