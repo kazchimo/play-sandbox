@@ -18,3 +18,10 @@ yarn start
 ```shell script
 sbt clean coverage test coverageReport
 ```
+
+## sbtのキーバインドをVimに変更する方法
+$HOME/.inpurtrcに
+```
+set editing-mode vi
+```
+を追記
