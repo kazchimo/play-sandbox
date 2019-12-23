@@ -1,7 +1,7 @@
-package controllers
+package controllers.user
 
-import application.useCase.user.UserIndexUseCase
-import domain.user.User
+import application.useCase.user.UserUseCase
+import domain.user.{User, UserEmail, UserFullName}
 import io.swagger.annotations.{Api, ApiOperation, ApiResponse, ApiResponses}
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json.Json
@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext
 @Api(value = "userAPI")
 class UserController @Inject() (
     cc: ControllerComponents,
-    indexUseCase: UserIndexUseCase
+    useCase: UserUseCase
 )(implicit ec: ExecutionContext)
     extends AbstractController(cc) {
 
@@ -24,8 +24,16 @@ class UserController @Inject() (
   )
   @ApiResponses(Array(new ApiResponse(code = 400, message = "bad request")))
   def index = Action.async { implicit request =>
-    indexUseCase.exec.map { users =>
+    useCase.index.map { users =>
       Ok(Json.toJson(users))
     }
+  }
+
+  def create = Action(parse.json[UserCreateBody]).async { implicit request =>
+    useCase
+      .create(UserEmail(request.body.email), UserFullName(request.body.name))
+      .map { user =>
+        Created(Json.toJson(user))
+      }
   }
 }

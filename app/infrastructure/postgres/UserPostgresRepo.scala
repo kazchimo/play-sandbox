@@ -1,6 +1,13 @@
 package infrastructure.postgres
 
-import domain.user.{IUserRepository, User, UserEmail, UserFullName, UserId}
+import domain.user.{
+  IUserRepository,
+  InitializingUser,
+  User,
+  UserEmail,
+  UserFullName,
+  UserId
+}
 import javax.inject.Inject
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.PostgresProfile
@@ -18,5 +25,16 @@ class UserPostgresRepo @Inject() (
     users.map { user =>
       User(UserId(user.id), UserEmail(user.email), UserFullName(user.fullname))
     }
+  }
+
+  override def create(user: InitializingUser): Future[User] = db.run {
+    Users
+      .returning(Users.map(_.id))
+      .into((_, id) => User(UserId(id), user.email, user.fullName)) +=
+      UsersRow(
+        0,
+        user.email.value,
+        user.fullName.value
+      )
   }
 }
