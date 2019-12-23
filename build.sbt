@@ -47,4 +47,5 @@ libraryDependencies ++= Seq(
 )
 
 coverageEnabled in ThisBuild := true // testのカバレッジをオンに
-coverageExcludedPackages := "<empty>;Reverse.*;.*Table.*;" // テストカバレッジで除外するファイルの指定
+coverageExcludedPackages := "<empty>;Reverse.*;.*Table.*;router.*" //
+// テストカバレッジで除外するファイルの指定
