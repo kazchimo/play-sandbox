@@ -1,4 +1,4 @@
-package infrastructure.repository
+package infrastructure.postgres
 
 import domain.user.{IUserRepository, User, UserEmail, UserFullName, UserId}
 import javax.inject.Inject
@@ -9,7 +9,7 @@ import infrastructure.tables.Tables._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class UserRepository @Inject() (
+class UserPostgresRepo @Inject() (
     implicit ec: ExecutionContext,
     val dbConfigProvider: DatabaseConfigProvider
 ) extends IUserRepository
