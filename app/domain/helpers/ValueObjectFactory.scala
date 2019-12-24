@@ -16,26 +16,35 @@ trait ValueObjectFactory[V, M] {
   }
 }
 
-trait NumericComparable[S, T] {
-  def compare(x: S, y: T): Boolean
-}
+object ValueObjectFactory {
 
-trait PositiveValueFactory[V, M]
-    extends ValueObjectFactory[V, M]
-    with NumericComparable[V, Int] {
-  def isValid(value: V): Boolean = compare(value, 0)
+  trait AnyValueAcceptableFactory[V, M] extends ValueObjectFactory[V, M] {
+    override def isValid(value: V): Boolean = true
 
-  def errorMessage(value: V): String =
-    s"$className requires non negative value: $value"
-}
+    override def errorMessage(value: V): String = ???
+  }
 
-trait LongGInt extends NumericComparable[Long, Int] {
-  override def compare(x: Long, y: Int): Boolean = x > y
-}
+  trait NumericComparable[S, T] {
+    def compare(x: S, y: T): Boolean
+  }
 
-trait NonEmptyStringFactory[M] extends ValueObjectFactory[String, M] {
-  override def isValid(value: String): Boolean = !value.isEmpty
+  trait PositiveValueFactory[V, M]
+      extends ValueObjectFactory[V, M]
+      with NumericComparable[V, Int] {
+    def isValid(value: V): Boolean = compare(value, 0)
 
-  override def errorMessage(value: String): String =
-    s"$className requires non empty string"
+    def errorMessage(value: V): String =
+      s"$className requires non negative value: $value"
+  }
+
+  trait LongGInt extends NumericComparable[Long, Int] {
+    override def compare(x: Long, y: Int): Boolean = x > y
+  }
+
+  trait NonEmptyStringFactory[M] extends ValueObjectFactory[String, M] {
+    override def isValid(value: String): Boolean = !value.isEmpty
+
+    override def errorMessage(value: String): String =
+      s"$className requires non empty string"
+  }
 }

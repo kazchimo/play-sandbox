@@ -1,6 +1,7 @@
 package domain.user
 
-import domain.helpers.{LongGInt, NonEmptyStringFactory, PositiveValueFactory, ValueObjectFactory}
+import domain.helpers.ValueObjectFactory
+import domain.helpers.ValueObjectFactory.{LongGInt, NonEmptyStringFactory, PositiveValueFactory}
 import play.api.libs.json.{Json, Writes}
 
 case class User(id: UserId, email: UserEmail, fullName: UserFullName)
