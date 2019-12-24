@@ -1,4 +1,4 @@
-package controllers.user
+package adapter.controllers.user
 
 import application.useCase.user.UserUseCase
 import domain.user.{User, UserEmail, UserFullName}
@@ -7,7 +7,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, ControllerComponents}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 @Api(value = "userAPI")
@@ -30,10 +30,15 @@ class UserController @Inject() (
   }
 
   def create = Action(parse.json[UserCreateBody]).async { implicit request =>
-    useCase
-      .create(UserEmail(request.body.email), UserFullName(request.body.name))
+    val result = for {
+      userEmail <- UserEmail.create(request.body.email)
+      userName <- UserFullName.create(request.body.name)
+    } yield useCase
+      .create(userEmail, userName)
       .map { user =>
         Created(Json.toJson(user))
       }
+
+    result.fold(e => Future.successful(BadRequest(e.message)), r => r)
   }
 }

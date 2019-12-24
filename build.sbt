@@ -36,6 +36,9 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.6"
 libraryDependencies += "io.swagger" %% "swagger-play2" % "1.7.1"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 
+scalacOptions += "-Ypartial-unification"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+
 // slick系の依存
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "3.3.2",

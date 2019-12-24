@@ -1,4 +1,4 @@
-package controllers.user
+package adapter.controllers.user
 
 import play.api.libs.json.{Json, Reads}
 

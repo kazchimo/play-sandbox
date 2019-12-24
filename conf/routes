@@ -4,8 +4,8 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /users               controllers.user.UserController.index
-POST        /users               controllers.user.UserController.create
+GET         /users               adapter.controllers.user.UserController.index
+POST        /users               adapter.controllers.user.UserController.create
 
 GET         /swagger.json        controllers.ApiHelpController.getResources
 
