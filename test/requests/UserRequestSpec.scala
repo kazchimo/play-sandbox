@@ -13,6 +13,7 @@ trait UserRequestSpecContext { self: ApplicationSpec =>
   )
 
   val createJson = Json.obj("email" -> "test@gmail.com", "name" -> "taro")
+  val invalidEmailJson = createJson ++ Json.obj("email" -> "test.com")
 
   val requestPath = "/users"
 }
@@ -43,23 +44,37 @@ class UserRequestSpec extends ApplicationSpec with UserRequestSpecContext {
   }
 
   describe("CREATE") {
-    def request =
-      route(
-        application,
-        FakeRequest(POST, requestPath)
-          .withJsonBody(createJson)
-      ).get
+    describe("正しくリクエストしたとき") {
+      def request =
+        route(
+          application,
+          FakeRequest(POST, requestPath)
+            .withJsonBody(createJson)
+        ).get
 
-    it("201Cratedが返る") {
-      status(request) shouldBe CREATED
+      it("201Cratedが返る") {
+        status(request) shouldBe CREATED
+      }
+
+      it("正しくレコードが作成される") {
+        request.futureValue
+        val dbUser = db.run(Users.take(1).result).futureValue.head
+
+        dbUser.email shouldBe (createJson \ "email").as[String]
+        dbUser.fullname shouldBe (createJson \ "name").as[String]
+      }
     }
 
-    it("正しくレコードが作成される") {
-      request.futureValue
-      val dbUser = db.run(Users.take(1).result).futureValue.head
+    describe("不正なbodyを送った時") {
+      it("400BadRequestが返る") {
+        val result = route(
+          application,
+          FakeRequest(POST, requestPath)
+            .withJsonBody(invalidEmailJson)
+        ).get
 
-      dbUser.email shouldBe (createJson \ "email").as[String]
-      dbUser.fullname shouldBe (createJson \ "name").as[String]
+        status(result) shouldBe BAD_REQUEST
+      }
     }
   }
 }
