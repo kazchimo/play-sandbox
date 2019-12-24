@@ -1,12 +1,9 @@
 package requests
 
-import play.api.db.DBApi
 import play.api.db.evolutions.Evolutions
-import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import slick.jdbc.PostgresProfile
 import traits.ApplicationSpec
 
 trait UserRequestSpecContext { self: ApplicationSpec =>
@@ -21,12 +18,7 @@ trait UserRequestSpecContext { self: ApplicationSpec =>
 }
 
 class UserRequestSpec extends ApplicationSpec with UserRequestSpecContext {
-  val application = applicationBuilder.build()
-  val dbapi = application.injector.instanceOf[DBApi].database("default")
-  val db = application.injector
-    .instanceOf[DatabaseConfigProvider]
-    .get[PostgresProfile]
-    .db
+
   def seed = db.run(seedAction).futureValue
 
   before {
